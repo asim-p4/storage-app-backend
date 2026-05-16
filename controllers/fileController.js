@@ -138,19 +138,24 @@ export const uploadInitiate = async (req, res) => {
 
 export const uploadComplete = async (req, res, next) => {
   const file = await File.findById(req.body.fileId);
+
   if (!file) {
     return res.status(404).json({ error: "File not found in our records" });
   }
 
   try {
     const fileData = await getS3FileMetaData(`${file.id}${file.extension}`);
+
     if (fileData.ContentLength !== file.size) {
       await file.deleteOne();
       return res.status(400).json({ error: "File size does not match." });
     }
+
     file.isUploading = false;
     await file.save();
+
     await updateDirectoriesSize(file.parentDirId, file.size);
+
     res.json({ message: "Upload completed" });
   } catch (err) {
     await file.deleteOne();

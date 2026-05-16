@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+
 import directoryRoutes from "./routes/directoryRoutes.js";
 import fileRoutes from "./routes/fileRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
@@ -9,6 +10,7 @@ import subscriptionRoutes from "./routes/subscriptionRoutes.js";
 import webhook from "./routes/webhookRoutes.js";
 import checkAuth from "./middlewares/authMiddleware.js";
 import { connectDB } from "./config/db.js";
+import { webhookVerify } from "./controllers/webhookControllers.js";
 
 await connectDB();
 
@@ -16,13 +18,20 @@ const PORT = process.env.PORT || 4000;
 
 const app = express();
 app.use(cookieParser(process.env.SESSION_SECRET));
-app.use(express.json());
 app.use(
   cors({
     origin: process.env.CLIENT_URL,
     credentials: true,
   }),
 );
+
+app.use(
+  "/webhooks/stripe",
+  express.raw({ type: "application/json" }),
+  webhookVerify,
+);
+
+app.use(express.json());
 
 app.use("/directory", checkAuth, directoryRoutes);
 app.use("/file", checkAuth, fileRoutes);

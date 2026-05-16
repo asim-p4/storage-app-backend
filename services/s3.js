@@ -8,11 +8,16 @@ import {
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
-const s3Client = new S3Client({ profile: "nodejs" });
+const s3Client = new S3Client({
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  },
+});
 
 export const createUploadSignedUrl = async ({ key, contentType }) => {
   const command = new PutObjectCommand({
-    Bucket: "procodrr-storage-app",
+    Bucket: "tablehood-credentials",
     Key: key,
     ContentType: contentType,
   });
@@ -31,7 +36,7 @@ export const createGetSignedUrl = async ({
   filename,
 }) => {
   const command = new GetObjectCommand({
-    Bucket: "procodrr-storage-app",
+    Bucket: "tablehood-credentials",
     Key: key,
     ResponseContentDisposition: `${download ? "attachment" : "inline"}; filename=${encodeURIComponent(filename)}`,
   });
@@ -45,7 +50,7 @@ export const createGetSignedUrl = async ({
 
 export const getS3FileMetaData = async (key) => {
   const command = new HeadObjectCommand({
-    Bucket: "procodrr-storage-app",
+    Bucket: "tablehood-credentials",
     Key: key,
   });
 
@@ -54,7 +59,7 @@ export const getS3FileMetaData = async (key) => {
 
 export const deleteS3File = async (key) => {
   const command = new DeleteObjectCommand({
-    Bucket: "procodrr-storage-app",
+    Bucket: "tablehood-credentials",
     Key: key,
   });
 
@@ -63,10 +68,10 @@ export const deleteS3File = async (key) => {
 
 export const deleteS3Files = async (keys) => {
   const command = new DeleteObjectsCommand({
-    Bucket: "procodrr-storage-app",
+    Bucket: "tablehood-credentials",
     Delete: {
       Objects: keys,
-      Quiet: false, // set true to skip individual delete responses
+      Quiet: false,
     },
   });
 
