@@ -42,7 +42,6 @@ app.use("/webhooks", webhook);
 
 app.use((err, req, res, next) => {
   console.log(err);
-  // res.status(err.status || 500).json({ error: "Something went wrong!" });
   res.json(err);
 });
 
