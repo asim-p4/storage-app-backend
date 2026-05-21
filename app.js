@@ -20,7 +20,7 @@ const app = express();
 app.use(cookieParser(process.env.SESSION_SECRET));
 app.use(
   cors({
-    origin: process.env.CLIENT_URL,
+    origin: [process.env.CLIENT_URL, "http://amis.com"],
     credentials: true,
   }),
 );
