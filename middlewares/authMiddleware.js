@@ -1,6 +1,8 @@
 import redisClient from "../config/redis.js";
 
 export default async function checkAuth(req, res, next) {
+  console.log("checking auth");
+  
   const { sid } = req.signedCookies;
 
   if (!sid) {
