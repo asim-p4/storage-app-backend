@@ -33,11 +33,7 @@ app.use(
 
 app.use(express.json());
 
-app.use("/", (req, res) => {
-  console.log(req.headers);
 
-  res.send({ message: "running" });
-});
 app.use("/directory", checkAuth, directoryRoutes);
 app.use("/file", checkAuth, fileRoutes);
 app.use("/", userRoutes);
