@@ -102,7 +102,7 @@ export const login = async (req, res, next) => {
     `@userId:{${user.id}}`,
     {
       RETURN: [],
-    }
+    },
   );
 
   if (allSessions.total >= 2) {
@@ -122,7 +122,8 @@ export const login = async (req, res, next) => {
   res.cookie("sid", sessionId, {
     httpOnly: true,
     signed: true,
-    sameSite: "lax",
+    sameSite: "none",
+    secure: true,
     maxAge: sessionExpiryTime,
   });
   res.json({ message: "logged in" });
@@ -180,7 +181,7 @@ export const logoutAll = async (req, res) => {
     `@userId:{${session.userId}}`,
     {
       RETURN: [],
-    }
+    },
   );
   await redisClient.del(allSessions.documents.map(({ id }) => id));
   res.status(204).end();
