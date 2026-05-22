@@ -68,7 +68,7 @@ export const renameDirectory = async (req, res, next) => {
         _id: id,
         userId: user._id,
       },
-      { name: newDirName }
+      { name: newDirName },
     );
     res.status(200).json({ message: "Directory Renamed!" });
   } catch (err) {
@@ -114,11 +114,7 @@ export const deleteDirectory = async (req, res, next) => {
       Key: `${_id}${extension}`,
     }));
 
-    console.log(keys);
-
-    const response = await deleteS3Files(keys);
-
-    console.log(response);
+    if (keys.length) await deleteS3Files(keys);
 
     await File.deleteMany({
       _id: { $in: files.map(({ _id }) => _id) },
@@ -130,7 +126,7 @@ export const deleteDirectory = async (req, res, next) => {
 
     await updateDirectoriesSize(directoryData.parentDirId, -directoryData.size);
   } catch (err) {
-    next(err);
+    return next(err);
   }
   return res.json({ message: "Files deleted successfully" });
 };

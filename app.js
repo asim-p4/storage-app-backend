@@ -33,7 +33,6 @@ app.use(
 
 app.use(express.json());
 
-
 app.use("/directory", checkAuth, directoryRoutes);
 app.use("/file", checkAuth, fileRoutes);
 app.use("/", userRoutes);
@@ -43,7 +42,8 @@ app.use("/webhooks", webhook);
 
 app.use((err, req, res, next) => {
   console.log(err);
-  res.json(err);
+  res.status(err.status || 500).json({ error: err });
+  // res.json(err);
 });
 
 app.listen(PORT, () => {
