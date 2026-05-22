@@ -130,8 +130,6 @@ export const uploadInitiate = async (req, res) => {
       key: `${insertedFile.id}${extension}`,
       contentType: req.body.contentType,
     });
-    console.log("uploadSignedUrl", uploadSignedUrl);
-
     res.json({ uploadSignedUrl, fileId: insertedFile.id });
   } catch (err) {
     console.log(err);
