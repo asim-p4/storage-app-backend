@@ -77,7 +77,7 @@ export const loginWithGoogle = async (req, res, next) => {
       httpOnly: true,
       signed: true,
       sameSite: "none",
-      secure: true,
+      // secure: true,
       maxAge: sessionExpiryTime,
     });
 
@@ -129,7 +129,7 @@ export const loginWithGoogle = async (req, res, next) => {
       signed: true,
       maxAge: sessionExpiryTime,
       sameSite: "none",
-      secure: true,
+      // secure: true,
     });
 
     mongooseSession.commitTransaction();

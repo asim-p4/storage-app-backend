@@ -124,7 +124,7 @@ export const login = async (req, res, next) => {
     httpOnly: true,
     signed: true,
     sameSite: "none",
-    secure: true,
+    // secure: true,
     maxAge: sessionExpiryTime,
   });
   res.json({ message: "logged in" });
