@@ -71,7 +71,7 @@ export const loginWithGoogle = async (req, res, next) => {
 
     const sessionExpiryTime = 60 * 1000 * 60 * 24 * 7;
     await redisClient.expire(redisKey, sessionExpiryTime / 1000);
-    console.log("setting cookies");
+    console.log("already user", sessionExpiryTime);
 
     res.cookie("sid", sessionId, {
       httpOnly: true,
@@ -122,6 +122,7 @@ export const loginWithGoogle = async (req, res, next) => {
 
     const sessionExpiryTime = 60 * 1000 * 60 * 24 * 7;
     await redisClient.expire(redisKey, sessionExpiryTime / 1000);
+    console.log("new user", sessionExpiryTime);
 
     res.cookie("sid", sessionId, {
       httpOnly: true,
