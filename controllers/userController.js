@@ -122,7 +122,7 @@ export const login = async (req, res, next) => {
   res.cookie("sid", sessionId, {
     httpOnly: true,
     signed: true,
-    sameSite: "None",
+    sameSite: "none",
     secure: true,
     maxAge: sessionExpiryTime,
   });
