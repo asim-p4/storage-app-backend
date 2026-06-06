@@ -35,10 +35,12 @@ app.use(
 app.use(express.json());
 
 app.use((req, res) => {
-  res.status(203).json({ message: "working" });
+  res.status(200).json({ message: "working" });
 });
 
 app.post("/github-webhook", (req, res) => {
+  console.log(req.body);
+
   res.json({ message: "req received" });
   const childprocess = spawn("bash", ["/home/ubuntu/deploy-frontend.sh"]);
 
