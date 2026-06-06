@@ -42,7 +42,7 @@ app.use((req, res, next) => {
 app.post("/github-webhook", (req, res) => {
   console.log(req.body);
 
-  res.json({ message: "req received" });
+  // res.json({ message: "req received" });
   const childprocess = spawn("bash", ["/home/ubuntu/deploy-frontend.sh"]);
 
   childprocess.stdout.on("data", (data) => {
