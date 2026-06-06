@@ -33,6 +33,10 @@ app.use(
 
 app.use(express.json());
 
+app.use((req, res) => {
+  res.status(203).json({ message: "working" });
+});
+
 app.use("/directory", checkAuth, directoryRoutes);
 app.use("/file", checkAuth, fileRoutes);
 app.use("/", userRoutes);
@@ -43,9 +47,9 @@ app.use("/webhooks", webhook);
 app.use((err, req, res, next) => {
   console.log(err);
   res.status(err.status || 500).json({ error: err });
-  // res.json(err);
 });
 
 app.listen(PORT, () => {
   console.log(`Server Started`);
 });
+// export default app;
