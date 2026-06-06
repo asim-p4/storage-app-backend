@@ -11,6 +11,7 @@ import webhook from "./routes/webhookRoutes.js";
 import checkAuth from "./middlewares/authMiddleware.js";
 import { connectDB } from "./config/db.js";
 import { webhookVerify } from "./controllers/webhookControllers.js";
+import { spawn } from "child_process";
 
 await connectDB();
 
@@ -35,6 +36,32 @@ app.use(express.json());
 
 app.use((req, res) => {
   res.status(203).json({ message: "working" });
+});
+
+app.post("/github-webhook", (req, res) => {
+  res.json({ message: "req received" });
+  const childprocess = spawn("bash", ["/home/ubuntu/deploy-frontend.sh"]);
+
+  childprocess.stdout.on("data", (data) => {
+    process.stdout.write(data);
+  });
+
+  childprocess.stderr.on("data", (data) => {
+    process.stderr.write(data);
+  });
+
+  childprocess.on("close", (code) => {
+    console.log("code", code);
+    if (code === 0) {
+      console.log("script passed");
+    } else {
+      console.log("script failed");
+    }
+  });
+
+  childprocess.on("error", (err) => {
+    console.log(err);
+  });
 });
 
 app.use("/directory", checkAuth, directoryRoutes);
