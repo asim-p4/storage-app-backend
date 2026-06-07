@@ -36,11 +36,11 @@ app.use(
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.status(200).json({ message: "working" });
+  res.status(200).json({ message: "added" });
 });
 
 app.post("/github-webhook", (req, res) => {
-  console.log(req.headers);
+  console.log(req.body.repository.name);
 
   let repo;
   if (req.body.repository.name === "storage-app-frontend") {
