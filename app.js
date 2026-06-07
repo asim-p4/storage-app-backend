@@ -36,7 +36,7 @@ app.use(
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.status(200).json({ message: "complete" });
+  res.status(200).json({ message: "done" });
 });
 
 app.post("/github-webhook", (req, res) => {
