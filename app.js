@@ -42,7 +42,7 @@ app.get("/", (req, res) => {
 app.post("/github-webhook", (req, res) => {
   console.log(req.body.repository.name);
 
-  let repo;
+  let repoName;
   if (req.body.repository.name === "storage-app-frontend") {
     repoName = "frontend";
   } else if (req.body.repository.name === "storage-app-backend") {
