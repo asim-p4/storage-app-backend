@@ -42,6 +42,13 @@ app.get("/", (req, res) => {
 app.post("/github-webhook", (req, res) => {
   console.log(req.headers);
 
+  let repo;
+  if (req.body.repository.name === "storage-app-frontend") {
+    repoName = "frontend";
+  } else if (req.body.repository.name === "storage-app-backend") {
+    repoName = "backend";
+  }
+
   const givenSignature = req.headers["x-hub-signature-256"];
 
   if (!givenSignature) {
@@ -61,7 +68,7 @@ app.post("/github-webhook", (req, res) => {
 
   res.json({ message: "req received" });
 
-  const childprocess = spawn("bash", ["/home/ubuntu/deploy-frontend.sh"]);
+  const childprocess = spawn("bash", [`/home/ubuntu/deploy-${repoName}.sh`]);
 
   childprocess.stdout.on("data", (data) => {
     process.stdout.write(data);
