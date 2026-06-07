@@ -37,7 +37,7 @@ app.use(
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.status(200).json({ message: ",kjhgfdxcvbnmkjhgvbnm,kljhgbv" });
+  res.status(200).json({ message: "d" });
 });
 
 app.post("/github-webhook", (req, res) => {
