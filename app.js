@@ -35,7 +35,7 @@ app.use(
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.status(200).json({ message: "jb" });
+  res.status(200).json({ message: "jbkhb" });
 });
 
 app.use("/directory", checkAuth, directoryRoutes);
