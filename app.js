@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import 'dotenv/config'
+import "dotenv/config";
 
 import directoryRoutes from "./routes/directoryRoutes.js";
 import fileRoutes from "./routes/fileRoutes.js";
@@ -34,8 +34,8 @@ app.use(
 
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.status(200).json({ message: "fourth version" });
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "fifth version", timestamp: new Date().toISOString() });
 });
 
 app.use("/directory", checkAuth, directoryRoutes);
