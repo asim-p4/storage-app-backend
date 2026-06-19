@@ -35,7 +35,7 @@ app.use(
 app.use(express.json());
 
 app.get("/health", (req, res) => {
-  res.status(200).json({ status: "fifth version!", timestamp: new Date().toISOString() });
+  res.status(200).json({ status: "fifth version!!", timestamp: new Date().toISOString() });
 });
 
 app.use("/directory", checkAuth, directoryRoutes);
